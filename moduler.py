@@ -322,8 +322,6 @@ def clean_transmission(df):
 
     return df
 
-
-
 # ------------------------------------------------
 # 2. Ana Çalışma Akışı
 # ------------------------------------------------
@@ -365,7 +363,6 @@ def main_workflow():
     print("\n--- Adım 4.5: Transmission Analizi ---")
     df = analyze_transmission(df)
     df = clean_transmission(df)
-
 
     # 5. Araç Yaşı Hesaplama
     print("\n--- Adım 5: Araç Yaşını Hesaplama ---")
