@@ -4,8 +4,8 @@ import re
 import os
 
 # Genel Ayarlar
-INPUT_FILE_NAME = 'ml/used_cars.csv'
-OUTPUT_FILE_NAME = 'ml/GPT5_cleaned_and_engineered_cars.csv'
+INPUT_FILE_NAME = 'Aktif_Calisma_Veri_Dosyasi/used_cars.csv'
+OUTPUT_FILE_NAME = 'Aktif_Calisma_Veri_Dosyasi/GPT5.1_deneme_cleaned_and_engineered_cars.csv'
 CURRENT_YEAR = 2025
 
 
