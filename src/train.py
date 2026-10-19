@@ -1,9 +1,13 @@
 """Eğitim: split -> baseline -> CV ile model seçimi -> test seti TEK sefer -> kaydet.
 
-Çalıştırma: python -m src.train
+Çalıştırma:
+    python -m src.train          # varsayılan (data/used_cars.csv)
+    python -m src.train --tr     # Türkiye veri seti (data/tr_used_cars.csv)
 """
+import argparse
 import json
 from datetime import datetime
+from pathlib import Path
 
 import joblib
 import numpy as np
@@ -23,12 +27,12 @@ from .features import parse_raw
 from .pipeline import build_model
 
 
-def load_data(reference_year: int) -> pd.DataFrame:
-    raw = pd.read_csv(C.DATA_PATH)
+def load_data(reference_year: int, data_path: Path = C.DATA_PATH) -> pd.DataFrame:
+    raw = pd.read_csv(data_path)
     df = parse_raw(raw, reference_year)
     before = len(df)
     df = df.dropna(subset=[C.TARGET, "age", "mileage"]).reset_index(drop=True)
-    print(f"Veri: {before} satır, hedef/yaş/mil eksik olan {before - len(df)} satır atıldı.")
+    print(f"Veri ({data_path.name}): {before} satır, hedef/yaş/mil eksik olan {before - len(df)} satır atıldı.")
     return df
 
 
@@ -62,10 +66,16 @@ def candidates() -> dict:
 
 
 def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--tr", action="store_true", help="Türkiye veri setini (data/tr_used_cars.csv) kullan")
+    ap.add_argument("--data", type=Path, default=None, help="Özel veri dosyası yolu")
+    args = ap.parse_args()
+
+    data_path = args.data if args.data else (C.TR_DATA_PATH if args.tr else C.DATA_PATH)
     C.MODEL_DIR.mkdir(exist_ok=True)
     C.REPORT_DIR.mkdir(exist_ok=True)
     reference_year = datetime.now().year
-    df = load_data(reference_year)
+    df = load_data(reference_year, data_path)
 
     # 1) SPLIT İLK ADIM. Test seti bundan sonra sadece en sonda bir kez kullanılır.
     X, y = df[C.FEATURES], df[C.TARGET]

@@ -3,6 +3,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA_PATH = ROOT / "data" / "used_cars.csv"
+TR_DATA_PATH = ROOT / "data" / "tr_used_cars.csv"
 MODEL_DIR = ROOT / "models"
 REPORT_DIR = ROOT / "reports"
 BUNDLE_PATH = MODEL_DIR / "best_pipeline.joblib"
@@ -19,6 +20,6 @@ LOW_CARD = ["fuel_category", "transmission_type", "accident", "clean_title", "ex
 HIGH_CARD = ["brand", "model"]
 FEATURES = NUMERIC + LOW_CARD + HIGH_CARD
 
-EV_BRANDS = {"Tesla", "Rivian", "Lucid", "Polestar", "Fisker", "Karma"}
+EV_BRANDS = {"Tesla", "Rivian", "Lucid", "Polestar", "Fisker", "Karma", "TOGG", "Togg", "BYD", "Skywell", "Leapmotor"}
 COLORS = ["black", "white", "gray", "silver", "blue", "red", "brown",
           "green", "beige", "gold", "yellow", "orange"]
